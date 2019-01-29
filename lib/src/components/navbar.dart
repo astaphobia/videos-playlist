@@ -16,6 +16,7 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             title: Text("Home"),
+            onTap: () => Navigator.of(context).pushNamed("home_page"),
           )
         ],
       ),
