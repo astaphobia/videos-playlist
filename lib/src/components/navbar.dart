@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:vplay/src/res/values/strings.dart';
 
@@ -33,6 +35,16 @@ class NavBar extends StatelessWidget {
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
             ),
             onTap: () => Navigator.of(context).pushNamed(Strings.homeTag),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.remove_circle,
+            ),
+            title: Text("Logout"),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacementNamed("login_page");
+            },
           )
         ],
       ),

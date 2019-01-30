@@ -93,26 +93,25 @@ class _LoginPageState extends State<LoginPage> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                key.currentState.save();
                                 signInByEmail(this.email, this.password)
                                     .then((result) {
                                   setState(() {
                                     isLoading = false;
                                   });
-                                  print(result);
+                                  Navigator.of(context)
+                                      .pushReplacementNamed("home_page");
                                 }).catchError((error) {
                                   setState(() {
                                     isLoading = false;
                                   });
                                   showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ModalDialog(
-                                        title: "FAILED",
-                                        content: error.toString(),
-                                      );
-                                    }
-                                  );
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ModalDialog(
+                                          title: "FAILED",
+                                          content: error.toString(),
+                                        );
+                                      });
                                   print(error);
                                 });
                               }

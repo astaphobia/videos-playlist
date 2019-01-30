@@ -6,11 +6,12 @@ import 'package:vplay/src/pages/splash_page.dart';
 import 'package:vplay/src/pages/login_page.dart';
 import 'package:vplay/src/res/values/strings.dart';
 import 'package:vplay/src/res/values/styles.dart';
+import 'package:vplay/src/pages/home_page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +31,8 @@ Widget _middleware() {
         return SplashPage();
       } else {
         if (snapshot.hasData) {
-          return LoginPage();
+          print(snapshot.data);
+          return HomePage();
         }
         return LoginPage();
       }
