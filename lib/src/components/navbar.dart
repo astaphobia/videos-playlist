@@ -5,22 +5,48 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Center(
-              child: Text(Strings.drawerTitle),
+          UserAccountsDrawerHeader(
+            accountName: Text(
+              "Ketut Ariasa",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.white
+              ),
+            ),
+            accountEmail: Text(
+              "asthapobia@gmail.com",
+              style: TextStyle(
+                fontSize: 18.0, 
+                fontWeight: FontWeight.w500,
+                color: Colors.white
+              )
+            ),
+            currentAccountPicture: FlutterLogo(),
+            decoration: BoxDecoration(
+              color: Colors.teal[800],
             ),
           ),
           ListTile(
-            title: Text(Strings.drawerHomeTitle),
+            leading: Icon(Icons.info),
+            title: Text(
+              Strings.drawerHomeTitle,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400
+              ),
+            ),
             onTap: () => Navigator.of(context).pushNamed(Strings.homeTag),
           )
         ],
       ),
     );
+
   }
 
 }
