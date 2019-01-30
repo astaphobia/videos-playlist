@@ -6,7 +6,6 @@ class HomePage extends StatelessWidget {
   static String tag = "home_page";
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Page"),
@@ -19,5 +18,4 @@ class HomePage extends StatelessWidget {
       drawer: NavBar(),
     );
   }
-
 }
