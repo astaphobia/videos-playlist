@@ -1,4 +1,4 @@
-package com.example.vplay;
+package xnotion.vplay;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
