@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "301307456799",
+    "firebase_url": "https://vplay-3ab8d.firebaseio.com",
+    "project_id": "vplay-3ab8d",
+    "storage_bucket": "vplay-3ab8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301307456799:android:15c05701c1fe8335",
+        "android_client_info": {
+          "package_name": "xnotion.vplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301307456799-jei7nptr3gghhcuqqa8hmeevbd1v0a0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xnotion.vplay",
+            "certificate_hash": "23a80000220b78b01f7a0b8529a1b238785b54cb"
+          }
+        },
+        {
+          "client_id": "301307456799-0m99tljrmpi9jtuf7f52nt57dlgegg5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAodSb9BAwfpUUgQmR9UEickzSZhyiB_rA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301307456799-0m99tljrmpi9jtuf7f52nt57dlgegg5c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "301307456799-c5sh0t1c0uriiht9vth4bf4d3c3hpqko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xnotion.vplay"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
