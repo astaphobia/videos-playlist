@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:vplay/src/components/modal_stack.dart';
 import 'package:vplay/src/components/modal_dialog.dart';
@@ -136,10 +137,12 @@ class _LoginPageState extends State<LoginPage> {
                         Text(" Sign with google")
                       ],
                     ),
-                    onPressed: () {
-                      setState(() {
-                        isLoading = true;
-                      });
+                    onPressed: () async {
+                      try {
+                        await _signInByGoogle();
+                      } catch (error) {
+                        print(error);
+                      }
                     },
                   ),
                 )
@@ -154,4 +157,17 @@ Future<String> signInByEmail(String email, String password) async {
   FirebaseUser user =
       await _auth.signInWithEmailAndPassword(email: email, password: password);
   return user.uid;
+}
+
+Future<FirebaseUser> _signInByGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  GoogleSignInAccount googleUser = await googleSignIn.signIn();
+  GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+  FirebaseUser firebaseUser = await auth.signInWithCredential(credential);
+  print(firebaseUser);
+  return firebaseUser;
 }

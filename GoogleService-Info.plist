@@ -7,17 +7,17 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>301307456799-m6p9dlpc0q6ofp8lk6ot1mefm2ere5en.apps.googleusercontent.com</string>
+	<string>301307456799-c5sh0t1c0uriiht9vth4bf4d3c3hpqko.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.301307456799-m6p9dlpc0q6ofp8lk6ot1mefm2ere5en</string>
+	<string>com.googleusercontent.apps.301307456799-c5sh0t1c0uriiht9vth4bf4d3c3hpqko</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDEKSRm_k2MfPchyNEGGCmhFsppC9rxNzY</string>
+	<string>AIzaSyAGhf-MDFhV4ttdtj8vbhg2hKQ3yVa1YZw</string>
 	<key>GCM_SENDER_ID</key>
 	<string>301307456799</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.xnotion.vplay</string>
+	<string>xnotion.vplay</string>
 	<key>PROJECT_ID</key>
 	<string>vplay-3ab8d</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:301307456799:ios:1dd41f44ea892569</string>
+	<string>1:301307456799:ios:15c05701c1fe8335</string>
 	<key>DATABASE_URL</key>
 	<string>https://vplay-3ab8d.firebaseio.com</string>
 </dict>
