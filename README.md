@@ -5,4 +5,7 @@ flutter project with
  * `Redux` for state management for easy implementation.
  * `Stack` wrapper for fullpage loader
  
+ # How To Run
+ `flutter run`
+ 
  ### OnProgress
