@@ -1,9 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 import 'package:vplay/src/res/values/strings.dart';
+import 'package:vplay/src/store/models/models.dart';
+import 'package:vplay/src/components/shaped_image.dart';
 
 class NavBar extends StatelessWidget {
+  final Store<AppState> store;
+  NavBar({@required this.store}) : assert(store != null);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,23 +16,30 @@ class NavBar extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: ListView(
+              padding: EdgeInsets.zero,
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   accountName: Text(
-                    "Ketut Ariasa",
+                    store.state.authUser.displayName != null
+                        ? store.state.authUser.displayName
+                        : "Unnamed",
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
                   accountEmail: Text(
-                    "asthapobia@gmail.com",
+                    store.state.authUser.email != null
+                        ? store.state.authUser.email
+                        : "xxx@vplay.com",
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
-                  currentAccountPicture: FlutterLogo(),
+                  currentAccountPicture: store.state.authUser.photoUrl != null
+                      ? ShapedImage(imgPath: store.state.authUser.photoUrl)
+                      : FlutterLogo(),
                   decoration: BoxDecoration(
                     color: Colors.teal[800],
                   ),
