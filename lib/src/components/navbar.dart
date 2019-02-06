@@ -7,44 +7,80 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(
-              "Ketut Ariasa",
-              style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-            ),
-            accountEmail: Text("asthapobia@gmail.com",
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white)),
-            currentAccountPicture: FlutterLogo(),
-            decoration: BoxDecoration(
-              color: Colors.teal[800],
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  accountName: Text(
+                    "Ketut Ariasa",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
+                  accountEmail: Text(
+                    "asthapobia@gmail.com",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
+                  currentAccountPicture: FlutterLogo(),
+                  decoration: BoxDecoration(
+                    color: Colors.teal[800],
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.info),
+                  title: Text(
+                    Strings.drawerHomeTitle,
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed("/home"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.account_circle),
+                  title: Text(
+                    "Account Detail",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed("/account_page"),
+                ),
+              ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text(
-              Strings.drawerHomeTitle,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+          Container(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Column(
+                children: <Widget>[
+                  Divider(),
+                  ListTile(
+                    leading: Icon(
+                      Icons.remove_circle,
+                      color: Colors.red,
+                    ),
+                    title: Text(
+                      "Signout",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut().then((ok) {
+                        Navigator.of(context)
+                            .pushReplacementNamed("/login_page");
+                      });
+                    },
+                  )
+                ],
+              ),
             ),
-            onTap: () => Navigator.of(context).pushNamed(Strings.homeTag),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.remove_circle,
-            ),
-            title: Text("Logout"),
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushReplacementNamed("login_page");
-            },
           )
         ],
       ),
