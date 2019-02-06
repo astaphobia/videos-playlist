@@ -21,7 +21,9 @@ class AccountPage extends StatelessWidget {
                 child: Text(callback.state.authUser.email),
               ),
             ),
-            drawer: NavBar(),
+            drawer: NavBar(
+              store: callback,
+            ),
           ),
     );
   }
