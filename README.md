@@ -1,9 +1,11 @@
 # videos-playlist (vplay)
 
 flutter project with 
- * `Firebase` authentication and also include Google OAuth.
- * `Redux` for state management for easy implementation.
- * `Stack` wrapper for fullpage loader
+ * `firebase_auth` authentication and also include `google_sign` for google OAuth.
+ * `redux` for state management for easy implementation and also `flutter_redux` to.
+ * `Stack` wrapper for fullpage loader from scratch
+ * `dio` as Api connection like `axios` or `node-fetch` in node
+ * `angle_validate` validation
  # Project Pattern
  ```
  lib
