@@ -10,9 +10,12 @@ void videosMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {
   if (action is VideosOnInitActions) {
     if (store.state.videos.isEmpty) {
+      store.dispatch(VideosOnLoadAction());
       Response response = await api.get("/search", queryParameters: {
         "key": Strings.youtubeApiKey,
         "part": "snippet",
+        "maxResults": "25",
+        "q": "trailer",
       });
       if (response.statusCode == 200) {
         List<Video> videos = (response.data["items"] as List).map((item) {
