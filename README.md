@@ -8,17 +8,18 @@ flutter project with
  ```
  lib
 └── src
-    ├── components    -> StatelessWidget wrapper
-    ├── pages         -> pages | containers that wrapped by StoreConnector
-    ├── res           -> static values
+    ├── components        ➡️ StatelessWidget wrapper
+    ├── pages             ➡️ pages | containers that wrapped by StoreConnector
+    ├── res               ➡️ static values
     │   └── values
     ├── store 
-    │   ├── actions   -> include classes reactive state triggerer
-    │   ├── models    -> include classes model all is immutable, only can mutate by reducers
-    │   └── reducers  -> include reducers for mutate state
-    └── utils         -> helpers class 
-    main.dart         -> main class wrapped by StoreProvider
-test                  -> includes test classes
+    │   ├── actions       ➡️ include classes reactive state triggered
+    │   ├── middlewares   ➡️ include voids that can call or inject into store as middleware list
+    │   ├── models        ➡️ include classes model all is immutable, only can mutate by reducers
+    │   └── reducers      ➡️ include reducers for mutate state
+    └── utils             ➡️ helpers class 
+    main.dart             ➡️ main class wrapped by StoreProvider
+test                     ➡️ includes test classes
 ```
     
  # How To Run
