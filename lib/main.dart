@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:vplay/src/pages/home_page.dart';
+import 'package:vplay/src/pages/login_page.dart';
 
 import 'package:vplay/src/routes.dart';
-import 'package:vplay/src/pages/splash_page.dart';
-import 'package:vplay/src/pages/login_page.dart';
 import 'package:vplay/src/res/values/strings.dart';
 import 'package:vplay/src/res/values/styles.dart';
-import 'package:vplay/src/pages/home_page.dart';
+import 'package:vplay/src/store/actions/actions.dart';
 import 'package:vplay/src/store/models/models.dart';
-import 'package:vplay/src/store/reducers/reducers.dart';
+import 'package:vplay/src/store/store.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final Store<AppState> store = Store<AppState>(
-    appStateReducer,
-    initialState: AppState.initial(),
-  );
-
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
@@ -27,26 +21,22 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: Strings.appTitle,
         theme: Styles.mainTheme,
-        home: _middleware(),
+        home: StoreConnector<AppState, Store<AppState>>(
+          onInit: (store) {
+            store.dispatch(AuthUserCheckAction());
+          },
+          converter: (Store<AppState> store) => store,
+          builder: (context, store) => _widget(store),
+        ),
         routes: routes,
       ),
     );
   }
 }
 
-Widget _middleware() {
-  return new StreamBuilder<FirebaseUser>(
-    stream: FirebaseAuth.instance.onAuthStateChanged,
-    builder: (BuildContext context, AsyncSnapshot snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return SplashPage();
-      } else {
-        if (snapshot.hasData) {
-          print(snapshot.data);
-          return HomePage();
-        }
-        return LoginPage();
-      }
-    },
-  );
+Widget _widget(Store<AppState> store) {
+  if (store.state.authUser.email.isEmpty) {
+    return LoginPage();
+  }
+  return HomePage();
 }

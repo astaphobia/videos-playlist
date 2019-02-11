@@ -1,6 +1,12 @@
 import "package:vplay/src/store/models/models.dart";
 
-class AuthUserLoadedAction{
+class AuthUserCheckAction {}
+
+class AuthUserOnLoadAction {}
+
+class AuthUserLoadedAction {
   final AuthUser authUser;
   AuthUserLoadedAction(this.authUser);
 }
+
+class AuthUserFailedAction {}

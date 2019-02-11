@@ -39,7 +39,7 @@ class NavBar extends StatelessWidget {
                   ),
                   currentAccountPicture: store.state.authUser.photoUrl != null
                       ? ShapedImage(imgPath: store.state.authUser.photoUrl)
-                      : FlutterLogo(),
+                      : ShapedImage(imgPath: store.state.authUser.email),
                   decoration: BoxDecoration(
                     color: Colors.teal[800],
                   ),
@@ -51,7 +51,7 @@ class NavBar extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
                   ),
-                  onTap: () => Navigator.of(context).pushNamed("/home"),
+                  onTap: () => Navigator.of(context).pushNamed("/home_page"),
                 ),
                 ListTile(
                   leading: Icon(Icons.account_circle),
@@ -61,6 +61,17 @@ class NavBar extends StatelessWidget {
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
                   ),
                   onTap: () => Navigator.of(context).pushNamed("/account_page"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.video_library),
+                  title: Text(
+                    "Videos",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed("/videos_page"),
                 ),
               ],
             ),
@@ -84,10 +95,11 @@ class NavBar extends StatelessWidget {
                       ),
                     ),
                     onTap: () async {
-                      await FirebaseAuth.instance.signOut().then((ok) {
+                      try {
+                        await FirebaseAuth.instance.signOut();
                         Navigator.of(context)
                             .pushReplacementNamed("/login_page");
-                      });
+                      } catch (e) {}
                     },
                   )
                 ],

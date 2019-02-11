@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -8,8 +7,7 @@ import 'package:vplay/src/store/models/models.dart';
 import 'package:vplay/src/store/actions/actions.dart';
 import 'package:vplay/src/components/modal_stack.dart';
 import 'package:vplay/src/components/modal_dialog.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
+import 'package:vplay/src/utils/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = "/login_page";
@@ -22,21 +20,21 @@ class _LoginPageState extends State<LoginPage> {
   final key = GlobalKey<FormState>();
   String email;
   String password;
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Store<AppState>>(
       converter: (Store<AppState> store) => store,
-      builder: (context, callback) => Scaffold(
+      builder: (context, store) => Scaffold(
             appBar: AppBar(
-              title: Text("Login Page"),
+              title: Text("Login"),
             ),
             body: ModalStack(
-              isLoading: callback.state.isLoading,
+              isLoading: store.state.isLoading,
               child: Container(
                 padding: EdgeInsets.all(20.0),
-                child: Column(
+                child: ListView(
+                  padding: EdgeInsets.all(20.0),
                   children: <Widget>[
                     Text(
                       'LOGIN FORM',
@@ -50,12 +48,13 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                                hintText: "xxx@gmail.com",
-                                labelText: "Email",
-                                icon: Icon(
-                                  Icons.email,
-                                  color: Colors.grey,
-                                )),
+                              hintText: "xxx@gmail.com",
+                              labelText: "Email",
+                              icon: Icon(
+                                Icons.email,
+                                color: Colors.grey,
+                              ),
+                            ),
                             onSaved: (value) {
                               email = value;
                             },
@@ -75,10 +74,13 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                               obscureText: true,
                               decoration: InputDecoration(
-                                  labelText: "Password",
-                                  hintText: "secret",
-                                  icon: Icon(Icons.lock_outline,
-                                      color: Colors.grey)),
+                                labelText: "Password",
+                                hintText: "secret",
+                                icon: Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.grey,
+                                ),
+                              ),
                               onSaved: (value) {
                                 password = value;
                               },
@@ -89,48 +91,46 @@ class _LoginPageState extends State<LoginPage> {
                                 return null;
                               }),
                           Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: RaisedButton(
-                                child: Text("Login"),
-                                color: Colors.purple,
-                                textColor: Colors.white,
-                                onPressed: () async {
-                                  if (key.currentState.validate()) {
-                                    key.currentState.save();
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    try {
-                                      FirebaseUser user = await signInByEmail(
-                                          this.email, this.password);
-                                      AuthUser authUser = AuthUser(
-                                        email: user.email,
-                                        provideId: user.providerId,
-                                        photoUrl: user.photoUrl,
-                                        displayName: user.displayName,
-                                        uid: user.uid,
-                                        phoneNumber: user.phoneNumber,
-                                      );
-                                      callback.dispatch(
-                                          AuthUserLoadedAction(authUser));
-                                      Navigator.of(context)
-                                          .pushReplacementNamed("/home_page");
-                                    } catch (e) {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return ModalDialog(
-                                              title: "FAILED",
-                                              content: e.toString(),
-                                            );
-                                          });
-                                    }
+                            padding: EdgeInsets.all(10.0),
+                            child: RaisedButton(
+                              child: Text("Login"),
+                              color: Colors.purple,
+                              textColor: Colors.white,
+                              onPressed: () async {
+                                if (key.currentState.validate()) {
+                                  key.currentState.save();
+                                  store.dispatch(AuthUserOnLoadAction());
+                                  try {
+                                    FirebaseUser user = await signInByEmail(
+                                        this.email, this.password);
+                                    AuthUser authUser = AuthUser(
+                                      email: user.email,
+                                      provideId: user.providerId,
+                                      photoUrl: user.photoUrl,
+                                      displayName: user.displayName,
+                                      uid: user.uid,
+                                      phoneNumber: user.phoneNumber,
+                                    );
+                                    store.dispatch(
+                                        AuthUserLoadedAction(authUser));
+                                    Navigator.of(context)
+                                        .pushReplacementNamed("/home_page");
+                                  } catch (e) {
+                                    store.dispatch(AuthUserFailedAction());
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ModalDialog(
+                                          title: "FAILED",
+                                          content: e.toString(),
+                                        );
+                                      },
+                                    );
                                   }
-                                },
-                              ))
+                                }
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () async {
                           try {
-                            FirebaseUser user = await _signInByGoogle();
+                            FirebaseUser user = await signInByGoogle();
                             AuthUser authUser = AuthUser(
                               email: user.email,
                               provideId: user.providerId,
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                               uid: user.uid,
                               phoneNumber: user.phoneNumber,
                             );
-                            callback.dispatch(AuthUserLoadedAction(authUser));
+                            store.dispatch(AuthUserLoadedAction(authUser));
                             Navigator.of(context)
                                 .pushReplacementNamed("/home_page");
                           } catch (error) {
@@ -177,22 +177,4 @@ class _LoginPageState extends State<LoginPage> {
           ),
     );
   }
-}
-
-Future<FirebaseUser> signInByEmail(String email, String password) async {
-  FirebaseUser user =
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-  return user;
-}
-
-Future<FirebaseUser> _signInByGoogle() async {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  GoogleSignInAccount googleUser = await googleSignIn.signIn();
-  GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-  AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-  FirebaseUser firebaseUser = await auth.signInWithCredential(credential);
-  return firebaseUser;
 }

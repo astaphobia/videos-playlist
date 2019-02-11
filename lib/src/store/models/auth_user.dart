@@ -12,13 +12,13 @@ class AuthUser {
     this.phoneNumber = '',
   });
 
-  factory AuthUser.fromJson(Map<String, dynamic> mapped) =>  AuthUser(
-    email: mapped["email"],
-    provideId: mapped["provideId"],
-    photoUrl: mapped["photoUrl"],
-    uid: mapped["uid"],
-    phoneNumber: mapped["phoneNumber"],  
-  );
+  factory AuthUser.fromJson(Map<String, dynamic> mapped) => AuthUser(
+        email: mapped["email"],
+        provideId: mapped["provideId"],
+        photoUrl: mapped["photoUrl"],
+        uid: mapped["uid"],
+        phoneNumber: mapped["phoneNumber"],
+      );
 
   @override
   String toString() =>

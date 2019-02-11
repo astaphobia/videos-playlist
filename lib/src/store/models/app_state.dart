@@ -5,11 +5,20 @@ import 'package:vplay/src/store/models/models.dart';
 class AppState {
   final bool isLoading;
   final AuthUser authUser;
-  
-  AppState({this.isLoading = false, this.authUser});
-  
+  final List<Video> videos;
+
+  AppState({
+    this.isLoading = false,
+    this.authUser,
+    this.videos,
+  });
+
   factory AppState.initial() => AppState(
-	  isLoading: false, 
-	  authUser: AuthUser(),
-  );
+        isLoading: false,
+        authUser: AuthUser(),
+        videos: [],
+      );
+  factory AppState.loaded() => AppState(
+        isLoading: true,
+      );
 }
